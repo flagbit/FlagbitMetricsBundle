@@ -10,14 +10,14 @@
             "name": "David Fuhr",
             "email": "david.fuhr@flagbit.de"
         },
-	{
-	    "name": "Antonio Mansilla"
-	    "email": "antonio.mansilla@flagbit.de"
-	}
+        {
+            "name": "Antonio Mansilla",
+            "email": "antonio.mansilla@flagbit.de"
+        }
     ],
     "require": {
         "php": ">=5.3.0",
-	"beberlei/metrics": "~1.0"
+        "beberlei/metrics": "~1.0"
     },
     "autoload": {
         "psr-0": {
