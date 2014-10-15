@@ -1,0 +1,28 @@
+{
+    "name": "flagbit/metrics-bundle",
+    "description": "FlagbitMetricsBundle for the Symfony Framework",
+    "type": "symfony-bundle",
+    "keywords": ["metrics", "logging"],
+    "homepage": "https://github.com/Flagbit/FlagbitMetricsBundle",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "David Fuhr",
+            "email": "david.fuhr@flagbit.de"
+        },
+	{
+	    "name": "Antonio Mansilla"
+	    "email": "antonio.mansilla@flagbit.de"
+	}
+    ],
+    "require": {
+        "php": ">=5.3.0",
+	"beberlei/metrics": "~1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Flagbit\\Bundle\\MetricsBundle": ""
+        }
+    },
+    "target-dir": "Flagbit/Bundle/MetricsBundle"
+}
