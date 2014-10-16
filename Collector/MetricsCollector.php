@@ -3,13 +3,27 @@
 namespace Flagbit\Bundle\MetricsBundle\Collector;
 
 use Beberlei\Metrics\Collector\Collector;
+use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
 
 class MetricsCollector
 {
     /**
+     * @var CollectorCollectionFactory
+     */
+    private $factory;
+
+    /**
      * @var array
      */
     private $providers = array();
+
+    /**
+     * @param CollectorCollectionFactory $factory
+     */
+    public function __construct(CollectorCollectionFactory $factory)
+    {
+        $this->factory = $factory;
+    }
 
     public function collectMetrics()
     {
@@ -24,7 +38,7 @@ class MetricsCollector
      */
     public function addMetricsProvider(MetricsProviderInterface $provider, array $collectors)
     {
-        $collectorsCollection = new CollectorCollection();
+        $collectorsCollection = $this->factory->create();
         foreach ($collectors as $collector) {
             $collectorsCollection->addCollector($collector);
         }
