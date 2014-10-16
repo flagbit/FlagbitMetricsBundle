@@ -1,10 +1,9 @@
 <?php
 
-namespace Flagbit\MetricsBundle;
+namespace Flagbit\Bundle\MetricsBundle;
 
-use Flagbit\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
+use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Scope;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class FlagbitMetricsBundle extends Bundle

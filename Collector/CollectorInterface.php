@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagbit\MetricsBundle\Collector;
+namespace Flagbit\Bundle\MetricsBundle\Collector;
 
 interface CollectorInterface
 {

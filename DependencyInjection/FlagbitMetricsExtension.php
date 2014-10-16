@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagbit\MetricsBundle\DependencyInjection;
+namespace Flagbit\Bundle\MetricsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

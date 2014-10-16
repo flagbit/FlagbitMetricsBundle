@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagbit\MetricsBundle\DependencyInjection\Compiler;
+namespace Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
