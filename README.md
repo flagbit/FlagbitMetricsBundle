@@ -1,4 +1,4 @@
-# FlagbitMetricsBundle
+# FlagbitMetricsBundle [![Build Status](https://travis-ci.org/Flagbit/FlagbitMetricsBundle.svg?branch=master)](https://travis-ci.org/Flagbit/FlagbitMetricsBundle)
 
 ## About
 
