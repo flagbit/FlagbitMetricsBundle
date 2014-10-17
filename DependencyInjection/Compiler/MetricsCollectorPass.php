@@ -9,25 +9,36 @@ use Symfony\Component\DependencyInjection\Reference;
 class MetricsCollectorPass implements CompilerPassInterface
 {
     /**
-     * You can modify the container here before it is dumped to PHP code.
+     * Add tagged metrics.provider services to flagbit_metrics.collector service
      *
      * @param ContainerBuilder $container
-     *
-     * @api
      */
     public function process(ContainerBuilder $container)
     {
-        $ourFancyCollectorDefinition = $container->findDefinition('flagbit_metrics.collector');
+        if (false === $container->hasDefinition('flagbit_metrics.collector')) {
+            return;
+        }
+
+        $definition = $container->getDefinition('flagbit_metrics.collector');
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
             $collectors = array();
             foreach($tags as $attributes) {
                 // FIXME collector is optional!
-
-                $collectors[] = new Reference('beberlei_metrics.collector.' . $attributes['collector']);
+                if (!isset($attributes['collector'])) {
+                    throw new \InvalidArgumentException(sprintf(
+                            'Metrics provider service "%s" must have an collector attribute in oder to specify a collector',
+                            $id
+                        ));
+                }
+                if ($container->hasDefinition('beberlei_metrics.collector.' . $attributes['collector'])) {
+                    $collectors[] = new Reference('beberlei_metrics.collector.' . $attributes['collector']);
+                }
             }
 
-            $ourFancyCollectorDefinition->addMethodCall('addMetricsProvider', array(new Reference($id), $collectors));
+            if (!empty($collectors)) {
+                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collectors));
+            }
         }
     }
 }
