@@ -20,7 +20,9 @@
         "beberlei/metrics": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "symfony/dependency-injection": "*",
+        "symfony/config": "*"
     },
     "autoload": {
         "psr-0": {
