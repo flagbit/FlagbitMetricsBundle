@@ -2,7 +2,9 @@
 
 namespace Flagbit\Bundle\MetricsBundle\Provider;
 
-interface MetricsProviderInterface
+use Flagbit\Bundle\MetricsBundle\Collector\CollectorInterface;
+
+interface ProviderInterface
 {
     /**
      * @param CollectorInterface $collector

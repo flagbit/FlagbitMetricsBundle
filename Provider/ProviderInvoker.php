@@ -1,12 +1,11 @@
 <?php
 
-namespace Flagbit\Bundle\MetricsBundle\Collector;
+namespace Flagbit\Bundle\MetricsBundle\Provider;
 
 use Beberlei\Metrics\Collector\Collector;
 use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
-use Flagbit\Bundle\MetricsBundle\Provider\MetricsProviderInterface;
 
-class MetricsCollector
+class ProviderInvoker
 {
     /**
      * @var CollectorCollectionFactory
@@ -34,10 +33,10 @@ class MetricsCollector
     }
 
     /**
-     * @param MetricsProviderInterface $provider
+     * @param ProviderInterface $provider
      * @param Collector[]              $collectors
      */
-    public function addMetricsProvider(MetricsProviderInterface $provider, array $collectors)
+    public function addMetricsProvider(ProviderInterface $provider, array $collectors)
     {
         $collectorsCollection = $this->factory->create();
         foreach ($collectors as $collector) {
