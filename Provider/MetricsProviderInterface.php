@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagbit\Bundle\MetricsBundle\Collector;
+namespace Flagbit\Bundle\MetricsBundle\Provider;
 
 interface MetricsProviderInterface
 {

@@ -4,6 +4,7 @@ namespace Flagbit\Bundle\MetricsBundle\Collector;
 
 use Beberlei\Metrics\Collector\Collector;
 use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
+use Flagbit\Bundle\MetricsBundle\Provider\MetricsProviderInterface;
 
 class MetricsCollector
 {
