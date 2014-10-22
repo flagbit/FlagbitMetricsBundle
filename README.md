@@ -52,9 +52,9 @@ For example, just imagine you want to measure some stats over you application.
 namespace Flagbit\ExampleBundle\MetricProvider;
 
 use Flagbit\Bundle\MetricsBundle\Collector\CollectorInterface;
-use Flagbit\Bundle\MetricsBundle\Collector\MetricsProviderInterface;
+use Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface;
 
-class MyMetricProvider implements MetricsProviderInterface
+class Provider implements ProviderInterface
 {
     public function collectMetrics(CollectorInterface $collector)
     {
@@ -75,9 +75,9 @@ service tag and select so many collectors as you want.
 ```yml
 services:
     my_mailer:
-        class:  Flagbit\ExampleBundle\MetricProvider\MyMetricProvider
+        class:  Flagbit\ExampleBundle\MetricProvider\Provider
         tags:
-            - { name: metrics.provider, collector: statd }
+            - { name: metrics.provider, collector: statsd }
             - { name: metrics.provider, collector: librato }
 ```
 #### XML
@@ -90,8 +90,8 @@ services:
         http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="my_mailer" class="Flagbit\ExampleBundle\MetricProvider\MyMetricProvider">
-            <tag name="metrics.provider" collector="statd" />
+        <service id="my_mailer" class="Flagbit\ExampleBundle\MetricProvider\Provider">
+            <tag name="metrics.provider" collector="statsd" />
             <tag name="metrics.provider" collector="librato" />
         </service>
     </services>
@@ -100,14 +100,23 @@ services:
 
 ## Collect your Metrics
 
+You can collect all metrics by yourself and after flush them to your metric servers or use the command that does 
+it for you instead.
+
 ```php
 <?php
 
 // Collects the metrics of all you tagged services
-$container->get('flagbit_metrics.collector')->collectMetrics();
+$container->get('flagbit_metrics.provider_invoker')->collectMetrics();
 
 // Just necessary if this is a cli task or symfony is running as a daemon
 // Otherwise Symfony will do it automatically for you 
 $container->get('beberlei_metrics.flush_service')->onTerminate();
+```
+
+### Command
+
+```bash
+$ php app/console flagbit:metrics:flush
 ```
 

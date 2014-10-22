@@ -15,11 +15,11 @@ class MetricsCollectorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('flagbit_metrics.collector')) {
+        if (false === $container->hasDefinition('flagbit_metrics.provider_invoker')) {
             return;
         }
 
-        $definition = $container->getDefinition('flagbit_metrics.collector');
+        $definition = $container->getDefinition('flagbit_metrics.provider_invoker');
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
             $collectors = array();
