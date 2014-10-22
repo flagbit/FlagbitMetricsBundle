@@ -48,4 +48,4 @@ class ProviderInvoker
             'collector' => $collectorsCollection,
         );
     }
-} 
+}

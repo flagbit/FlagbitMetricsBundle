@@ -13,4 +13,4 @@ class CollectorCollectionFactory
     {
         return new CollectorCollection();
     }
-} 
+}

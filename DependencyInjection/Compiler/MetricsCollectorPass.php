@@ -24,7 +24,6 @@ class MetricsCollectorPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
             $collectors = array();
             foreach($tags as $attributes) {
-                // FIXME collector is optional!
                 if (!isset($attributes['collector'])) {
                     throw new \InvalidArgumentException(sprintf(
                             'Metrics provider service "%s" must have an collector attribute in oder to specify a collector',

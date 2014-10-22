@@ -23,4 +23,4 @@ class MetricsFlushCommand extends ContainerAwareCommand
         // Flush metric results
         $this->getContainer()->get('beberlei_metrics.flush_service')->onTerminate();
     }
-} 
+}
