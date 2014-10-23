@@ -38,7 +38,7 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
 
         $container->expects($this->once())
             ->method('getDefinition')
-            ->with('flagbit_metrics.collector')
+            ->with('flagbit_metrics.provider_invoker')
             ->will($this->returnValue($definition));
 
         $container->expects($this->atLeastOnce())
