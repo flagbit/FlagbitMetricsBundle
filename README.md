@@ -1,4 +1,4 @@
-# FlagbitMetricsBundle [![Build Status](https://travis-ci.org/Flagbit/FlagbitMetricsBundle.svg?branch=master)](https://travis-ci.org/Flagbit/FlagbitMetricsBundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/fe3a2b65-3434-445c-a744-020e6612ec63/mini.png)](https://insight.sensiolabs.com/projects/fe3a2b65-3434-445c-a744-020e6612ec63)
+# FlagbitMetricsBundle [![Build Status](https://travis-ci.org/Flagbit/FlagbitMetricsBundle.svg?branch=master)](https://travis-ci.org/Flagbit/FlagbitMetricsBundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/073d1c3c-d8d5-4abf-93f5-b2107b33cea8/mini.png)](https://insight.sensiolabs.com/projects/073d1c3c-d8d5-4abf-93f5-b2107b33cea8)
 
 ## About
 
