@@ -21,7 +21,7 @@ class MetricsCollectorPass implements CompilerPassInterface
         }
 
         $definition = $container->getDefinition('flagbit_metrics.provider_invoker');
-        $collection = $container->getDefinition('flagbit_metrics.factory.collector_collection');
+        $collection = $container->getDefinition('flagbit_metrics.collector.collector_collection');
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
             $collectors = array();
@@ -38,7 +38,7 @@ class MetricsCollectorPass implements CompilerPassInterface
             }
 
             if (!empty($collectors)) {
-                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collection->addMethodCall('create', array($collectors))));
+                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collection->setArguments(array($collectors))));
             }
         }
     }

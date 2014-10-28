@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="flagbit_metrics.provider_invoker.class">Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker</parameter>
         <parameter key="flagbit_metrics.factory.collector_collection.class">Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory</parameter>
+        <parameter key="flagbit_metrics.collector.collector_collection.class">Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection</parameter>
     </parameters>
 
     <services>
@@ -14,6 +15,12 @@
 
         <service id="flagbit_metrics.provider_invoker" class="%flagbit_metrics.provider_invoker.class%">
             <argument type="service" id="flagbit_metrics.factory.collector_collection" />
+        </service>
+
+        <service id="flagbit_metrics.collector.collector_collection"
+            class="%flagbit_metrics.collector.collector_collection.class%"
+            factory-service="flagbit_metrics.factory.collector_collection"
+            factory-method="create">
         </service>
     </services>
 </container>
