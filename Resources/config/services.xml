@@ -21,6 +21,7 @@
             class="%flagbit_metrics.collector.collector_collection.class%"
             factory-service="flagbit_metrics.factory.collector_collection"
             factory-method="create">
+            <argument type="collection" />
         </service>
     </services>
 </container>
