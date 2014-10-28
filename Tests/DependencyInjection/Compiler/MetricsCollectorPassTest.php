@@ -1,5 +1,7 @@
 <?php
 
+namespace Flagbit\Bundle\MetricsBundle\Tests\DependencyInjection\Compiler;
+
 use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
 use Symfony\Component\DependencyInjection\Reference;
 
