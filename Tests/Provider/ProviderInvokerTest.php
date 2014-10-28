@@ -18,8 +18,7 @@ class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->factory = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory');
-        $this->metricsProvider = new ProviderInvoker($this->factory);
+        $this->metricsProvider = new ProviderInvoker();
     }
 
     public function testAddMetricsProvider()

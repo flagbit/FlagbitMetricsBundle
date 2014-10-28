@@ -2,7 +2,6 @@
 
 namespace Flagbit\Bundle\MetricsBundle\Provider;
 
-use Beberlei\Metrics\Collector\Collector;
 use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
 use Flagbit\Bundle\MetricsBundle\Collector\CollectorInterface;
 
@@ -17,14 +16,6 @@ class ProviderInvoker
      * @var array
      */
     private $providers = array();
-
-    /**
-     * @param CollectorCollectionFactory $factory
-     */
-    public function __construct(CollectorCollectionFactory $factory)
-    {
-        $this->factory = $factory;
-    }
 
     public function collectMetrics()
     {
