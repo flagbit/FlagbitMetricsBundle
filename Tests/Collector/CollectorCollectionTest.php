@@ -1,5 +1,7 @@
 <?php
 
+namespace Flagbit\Bundle\MetricsBundle\Tests\Collector;
+
 use Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection;
 
 class CollectorCollectionTest extends \PHPUnit_Framework_TestCase
