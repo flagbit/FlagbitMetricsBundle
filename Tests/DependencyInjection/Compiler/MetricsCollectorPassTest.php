@@ -3,7 +3,6 @@
 namespace Flagbit\Bundle\MetricsBundle\Tests\DependencyInjection\Compiler;
 
 use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
-use Symfony\Component\DependencyInjection\Reference;
 
 class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,9 +37,8 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
             ->method('hasDefinition')
             ->will($this->returnValue(true));
 
-        $container->expects($this->once())
+        $container->expects($this->exactly(2))
             ->method('getDefinition')
-            ->with('flagbit_metrics.provider_invoker')
             ->will($this->returnValue($definition));
 
         $container->expects($this->atLeastOnce())
@@ -48,12 +46,8 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
             ->with('metrics.provider')
             ->will($this->returnValue($services));
 
-        $definition->expects($this->once())
-            ->method('addMethodCall')
-            ->with('addMetricsProvider', array(
-                new Reference('my_metric_collector'),
-                array(new Reference('beberlei_metrics.collector.librato'))
-            ));
+        $definition->expects($this->exactly(2))
+            ->method('addMethodCall');
 
         $metricsCollectorPass = new MetricsCollectorPass();
         $metricsCollectorPass->process($container);

@@ -1,5 +1,7 @@
 <?php
 
+namespace Flagbit\Bundle\MetricsBundle\Tests\Collector\Factory;
+
 use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
 
 class CollectorCollectionFactoryTest extends \PHPUnit_Framework_TestCase
@@ -14,11 +16,21 @@ class CollectorCollectionFactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory = new CollectorCollectionFactory();
     }
 
-    public function testCreate()
+    public function testCreateEmpty()
     {
         $this->assertInstanceOf(
             'Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection',
-            $this->factory->create()
+            $this->factory->create(array())
+        );
+    }
+
+    public function testCreate()
+    {
+        $collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
+
+        $this->assertInstanceOf(
+            'Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection',
+            $this->factory->create(array($collector))
         );
     }
 } 

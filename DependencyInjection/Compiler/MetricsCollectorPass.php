@@ -12,6 +12,7 @@ class MetricsCollectorPass implements CompilerPassInterface
      * Add tagged metrics.provider services to flagbit_metrics.collector service
      *
      * @param ContainerBuilder $container
+     * @throws \InvalidArgumentException
      */
     public function process(ContainerBuilder $container)
     {
@@ -20,6 +21,7 @@ class MetricsCollectorPass implements CompilerPassInterface
         }
 
         $definition = $container->getDefinition('flagbit_metrics.provider_invoker');
+        $collection = $container->getDefinition('flagbit_metrics.factory.collector_collection');
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
             $collectors = array();
@@ -36,7 +38,7 @@ class MetricsCollectorPass implements CompilerPassInterface
             }
 
             if (!empty($collectors)) {
-                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collectors));
+                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collection->addMethodCall('create', array($collectors))));
             }
         }
     }

@@ -7,10 +7,18 @@ use Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection;
 class CollectorCollectionFactory
 {
     /**
+     * @param \Beberlei\Metrics\Collector\Collector[] $collectors
+     *
      * @return CollectorCollection
      */
-    public function create()
+    public function create(array $collectors)
     {
-        return new CollectorCollection();
+        $collectorCollection = new CollectorCollection();
+
+        foreach ($collectors as $collector) {
+            $collectorCollection->addCollector($collector);
+        }
+
+        return $collectorCollection;
     }
 }
