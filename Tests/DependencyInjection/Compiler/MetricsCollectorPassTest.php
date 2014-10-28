@@ -3,6 +3,7 @@
 namespace Flagbit\Bundle\MetricsBundle\Tests\DependencyInjection\Compiler;
 
 use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
+use Symfony\Component\DependencyInjection\Reference;
 
 class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,6 +32,7 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
         );
 
         $definition = $this->getMock('Symfony\Component\DependencyInjection\Definition');
+        $collectionDef = $this->getMock('Symfony\Component\DependencyInjection\Definition');
         $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
 
         $container->expects($this->atLeastOnce())
@@ -39,15 +41,26 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
 
         $container->expects($this->exactly(2))
             ->method('getDefinition')
-            ->will($this->returnValue($definition));
+            ->will($this->returnValueMap(array(
+                array('flagbit_metrics.provider_invoker', $definition),
+                array('flagbit_metrics.collector.collector_collection', $collectionDef),
+            )));
 
         $container->expects($this->atLeastOnce())
             ->method('findTaggedServiceIds')
             ->with('metrics.provider')
             ->will($this->returnValue($services));
 
-        $definition->expects($this->exactly(2))
-            ->method('addMethodCall');
+        $collectionDef->expects($this->once())
+            ->method('setArguments')
+            ->will($this->returnSelf());
+
+        $definition->expects($this->once())
+            ->method('addMethodCall')
+            ->with('addMetricsProvider', array(
+                new Reference('my_metric_collector'),
+                $collectionDef
+            ));
 
         $metricsCollectorPass = new MetricsCollectorPass();
         $metricsCollectorPass->process($container);
