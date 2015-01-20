@@ -3,7 +3,7 @@
 ## About
 
 The FlagbitMetricsBundle provides easy integration for the [metrics collector library](https://github.com/beberlei/metrics) 
-of Bejamin Beberlei into Symfony2.
+of Bejamin Eberlei into Symfony2.
 
 ## Installation
 
@@ -14,7 +14,7 @@ Add the following lines to your composer.json:
 ```json
 {
     "require": {
-        "flagbit/metrics-bundle", "1.*"
+        "flagbit/metrics-bundle": "1.*"
     }
 }
 ```
@@ -39,8 +39,8 @@ class AppKernel extends Kernel
 
 ## Usage
 
-Don't forget that this bundle has a dependency on the Beberlei Metrics library, first you should integrate and configure
- it. More information can be found [here](https://github.com/beberlei/metrics).
+Don't forget that this bundle has a dependency on a Metrics library, which you should first integrate and configure.
+More information can be found [here](https://github.com/beberlei/metrics).
 
 For example, just imagine you want to measure some stats over you application.
 
