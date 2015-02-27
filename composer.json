@@ -1,6 +1,6 @@
 {
     "name": "flagbit/metrics-bundle",
-    "description": "FlagbitMetricsBundle for the Symfony Framework",
+    "description": "FlagbitMetricsBundle provides easy integration of metrics collector services for the Symfony Framework",
     "type": "symfony-bundle",
     "keywords": ["metrics", "logging"],
     "homepage": "https://github.com/Flagbit/FlagbitMetricsBundle",

@@ -106,7 +106,7 @@ it for you instead.
 ```php
 <?php
 
-// Collects the metrics of all you tagged services
+// Collects the metrics of all your tagged services
 $container->get('flagbit_metrics.provider_invoker')->collectMetrics();
 
 // Just necessary if this is a cli task or symfony is running as a daemon
