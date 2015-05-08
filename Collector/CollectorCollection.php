@@ -9,7 +9,7 @@ class CollectorCollection implements CollectorInterface
     /**
      * @var array
      */
-    private $collectors;
+    private $collectors = array();
 
     /**
      * @param Collector $collector

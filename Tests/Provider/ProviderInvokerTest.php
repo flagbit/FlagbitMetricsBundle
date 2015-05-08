@@ -1,5 +1,7 @@
 <?php
 
+namespace Flagbit\Bundle\MetricsBundle\Tests\Provider;
+
 use Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker;
 
 class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
@@ -10,55 +12,34 @@ class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
     private $factory;
 
     /**
-     * @var MetricsCollector
+     * @var ProviderInvoker
      */
     private $metricsProvider;
 
     protected function setUp()
     {
-        $this->factory = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory');
-        $this->metricsProvider = new ProviderInvoker($this->factory);
+        $this->metricsProvider = new ProviderInvoker();
     }
 
     public function testAddMetricsProvider()
     {
-        $collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
+        $collectorCollection = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection');
         $provider = $this->getMock('Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface');
 
-        $this->getCollectorCollection($collector);
-
-        $this->metricsProvider->addMetricsProvider($provider, array($collector));
+        $this->metricsProvider->addMetricsProvider($provider, $collectorCollection);
     }
 
     public function testCollectMetrics()
     {
-        $collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
+        $collectorCollection = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection');
         $provider = $this->getMock('Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface');
-        $collectorCollection = $this->getCollectorCollection($collector);
 
         $provider
             ->expects($this->once())
             ->method('collectMetrics')
             ->with($collectorCollection);
 
-        $this->metricsProvider->addMetricsProvider($provider, array($collector));
+        $this->metricsProvider->addMetricsProvider($provider, $collectorCollection);
         $this->metricsProvider->collectMetrics();
-    }
-
-    private function getCollectorCollection($collector)
-    {
-        $collectorCollection = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection');
-
-        $this->factory
-            ->expects($this->once())
-            ->method('create')
-            ->will($this->returnValue($collectorCollection));
-
-        $collectorCollection
-            ->expects($this->once())
-            ->method('addCollector')
-            ->with($collector);
-
-        return $collectorCollection;
     }
 }
