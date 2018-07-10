@@ -22,7 +22,7 @@ class MetricsCollectorPass implements CompilerPassInterface
         $definition = $container->getDefinition('flagbit_metrics.provider_invoker');
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
-            $collectors = array();
+            $collectors = [];
             foreach($tags as $attributes) {
                 if (!isset($attributes['collector'])) {
                     throw new \InvalidArgumentException(sprintf(
@@ -36,7 +36,7 @@ class MetricsCollectorPass implements CompilerPassInterface
             }
 
             if (!empty($collectors)) {
-                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collectors));
+                $definition->addMethodCall('addMetricsProvider', [new Reference($id), $collectors]);
             }
         }
     }

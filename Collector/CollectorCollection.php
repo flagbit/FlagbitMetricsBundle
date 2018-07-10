@@ -7,7 +7,7 @@ use Beberlei\Metrics\Collector\Collector;
 class CollectorCollection implements CollectorInterface
 {
     /**
-     * @var array
+     * @var Collector[]
      */
     private $collectors;
 
@@ -20,47 +20,44 @@ class CollectorCollection implements CollectorInterface
     }
 
     /**
-     * @param string $variable
+     * {@inheritdoc}
      */
     function increment($variable)
     {
-        $this->callAll('increment', array($variable));
+        $this->callAll('increment', [$variable]);
     }
 
     /**
-     * @param string $variable
+     * {@inheritdoc}
      */
     function decrement($variable)
     {
-        $this->callAll('decrement', array($variable));
+        $this->callAll('decrement', [$variable]);
     }
 
     /**
-     * @param string $variable
-     * @param float  $time
+     * {@inheritdoc}
      */
     function timing($variable, $time)
     {
-        $this->callAll('timing', array($variable, $time));
+        $this->callAll('timing', [$variable, $time]);
     }
 
     /**
-     * @param string $variable
-     * @param int    $value
+     * {@inheritdoc}
      */
     function measure($variable, $value)
     {
-        $this->callAll('measure', array($variable, $value));
+        $this->callAll('measure', [$variable, $value]);
     }
 
     /**
-     * @param string $method
-     * @param array  $arguments
+     * {@inheritdoc}
      */
     private function callAll($method, array $arguments)
     {
         foreach ($this->collectors as $collector) {
-            call_user_func_array(array($collector, $method), $arguments);
+            $collector->{$method}(...$arguments);
         }
     }
 }

@@ -34,7 +34,7 @@ class ProviderInvoker
 
     /**
      * @param ProviderInterface $provider
-     * @param Collector[]              $collectors
+     * @param Collector[]       $collectors
      */
     public function addMetricsProvider(ProviderInterface $provider, array $collectors)
     {
