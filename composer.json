@@ -21,11 +21,12 @@
         "symfony/framework-bundle": "^3.4|^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.0"
+        "phpunit/phpunit": "~6.0",
+        "symfony/console": "^3.4|^4.0"
     },
     "autoload": {
         "psr-4": {
-            "Flagbit\\Bundle\\MetricsBundle\\": "./"
+            "Flagbit\\Bundle\\MetricsBundle\\": "."
         }
     },
     "target-dir": "Flagbit/Bundle/MetricsBundle"
