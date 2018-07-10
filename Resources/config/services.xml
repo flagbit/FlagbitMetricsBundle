@@ -10,10 +10,10 @@
     </parameters>
 
     <services>
-        <service id="flagbit_metrics.factory.collector_collection" class="%flagbit_metrics.factory.collector_collection.class%"/>
+        <defaults public="false" autowire="true" autoconfigure="true" />
 
-        <service id="flagbit_metrics.provider_invoker" class="%flagbit_metrics.provider_invoker.class%">
-            <argument type="service" id="flagbit_metrics.factory.collector_collection" />
-        </service>
+        <service id="flagbit_metrics.factory.collector_collection" alias="%flagbit_metrics.factory.collector_collection.class%" public="true" />
+
+        <service id="flagbit_metrics.provider_invoker" alias="%flagbit_metrics.provider_invoker.class%" public="true" />
     </services>
 </container>
