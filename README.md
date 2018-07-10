@@ -9,14 +9,10 @@ of Bejamin Eberlei into Symfony2.
 
 ### Using Composer
 
-Add the following lines to your composer.json:
+Installation with composer:
 
-```json
-{
-    "require": {
-        "flagbit/metrics-bundle": "1.*"
-    }
-}
+```bash
+composer require flagbit/metrics-bundle
 ```
 
 ### Register the bundle
@@ -32,7 +28,7 @@ class AppKernel extends Kernel
             // ...
             new Flagbit\Bundle\MetricsBundle\FlagbitMetricsBundle(),
             // ...
-        ;)
+        );
     }
 }
 ```
@@ -58,7 +54,7 @@ class Provider implements ProviderInterface
 {
     public function collectMetrics(CollectorInterface $collector)
     {
-        $value = rand(1,9);
+        $value = random_int(1,9);
         $collector->measure('foo.bar', $value);
     }
 }
@@ -66,7 +62,7 @@ class Provider implements ProviderInterface
 
 ### Create your Service
 
-Once you have created your metric provider class, lets go to create the service. In order the metric collector service 
+Once you have created your metric provider class, let's go to create the service. In order the metric collector service 
 automatically to collect all the metrics of your metric provider service, you just need to use the "metrics.provider" 
 service tag and select so many collectors as you want.
 
@@ -114,9 +110,11 @@ $container->get('flagbit_metrics.provider_invoker')->collectMetrics();
 $container->get('beberlei_metrics.flush_service')->onTerminate();
 ```
 
+It is recommended to inject the services into yours instead of using directly the container.
+
 ### Command
 
 ```bash
-$ php app/console flagbit:metrics:flush
+$ php bin/console flagbit:metrics:flush
 ```
 
