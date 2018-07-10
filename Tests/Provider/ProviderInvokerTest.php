@@ -1,8 +1,13 @@
 <?php
 
+use Beberlei\Metrics\Collector\Collector;
+use Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection;
+use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
+use Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface;
 use Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker;
+use PHPUnit\Framework\TestCase;
 
-class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
+class ProviderInvokerTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -10,30 +15,30 @@ class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
     private $factory;
 
     /**
-     * @var MetricsCollector
+     * @var ProviderInvoker
      */
     private $metricsProvider;
 
     protected function setUp()
     {
-        $this->factory = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory');
+        $this->factory = $this->createMock(CollectorCollectionFactory::class);
         $this->metricsProvider = new ProviderInvoker($this->factory);
     }
 
     public function testAddMetricsProvider()
     {
-        $collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
-        $provider = $this->getMock('Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface');
+        $collector = $this->createMock(Collector::class);
+        $provider = $this->createMock(ProviderInterface::class);
 
         $this->getCollectorCollection($collector);
 
-        $this->metricsProvider->addMetricsProvider($provider, array($collector));
+        $this->metricsProvider->addMetricsProvider($provider, [$collector]);
     }
 
     public function testCollectMetrics()
     {
-        $collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
-        $provider = $this->getMock('Flagbit\Bundle\MetricsBundle\Provider\ProviderInterface');
+        $collector = $this->createMock(Collector::class);
+        $provider = $this->createMock(ProviderInterface::class);
         $collectorCollection = $this->getCollectorCollection($collector);
 
         $provider
@@ -41,18 +46,18 @@ class ProviderInvokerTest extends \PHPUnit_Framework_TestCase
             ->method('collectMetrics')
             ->with($collectorCollection);
 
-        $this->metricsProvider->addMetricsProvider($provider, array($collector));
+        $this->metricsProvider->addMetricsProvider($provider, [$collector]);
         $this->metricsProvider->collectMetrics();
     }
 
     private function getCollectorCollection($collector)
     {
-        $collectorCollection = $this->getMock('Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection');
+        $collectorCollection = $this->createMock(CollectorCollection::class);
 
         $this->factory
             ->expects($this->once())
             ->method('create')
-            ->will($this->returnValue($collectorCollection));
+            ->willReturn($collectorCollection);
 
         $collectorCollection
             ->expects($this->once())

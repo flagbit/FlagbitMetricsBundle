@@ -1,8 +1,10 @@
 <?php
 
+use Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection;
 use Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory;
+use PHPUnit\Framework\TestCase;
 
-class CollectorCollectionFactoryTest extends \PHPUnit_Framework_TestCase
+class CollectorCollectionFactoryTest extends TestCase
 {
     /**
      * @var CollectorCollectionFactory
@@ -17,7 +19,7 @@ class CollectorCollectionFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $this->assertInstanceOf(
-            'Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection',
+            CollectorCollection::class,
             $this->factory->create()
         );
     }

@@ -1,23 +1,26 @@
 <?php
 
 use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
+class MetricsCollectorPassTest extends TestCase
 {
     public function testMetricsProviderNoCollectorThrowsException()
     {
-        $services = array(
-            'my_metric_collector' => array(0 => array())
-        );
+        $services = [
+            'my_metric_collector' => [0 => []]
+        ];
 
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $container = $this->createMock(ContainerBuilder::class);
         $container->expects($this->once())
             ->method('findTaggedServiceIds')
             ->with('metrics.provider')
-            ->will($this->returnValue($services));
+            ->willReturn($services);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
 
         $metricsCollectorPass = new MetricsCollectorPass();
         $metricsCollectorPass->process($container);
@@ -25,32 +28,32 @@ class MetricsCollectorPassTest extends \PHPUnit_Framework_TestCase
 
     public function testValidCollector()
     {
-        $services = array(
-            'my_metric_collector' => array(0 => array('collector' => 'librato'))
-        );
+        $services = [
+            'my_metric_collector' => [0 => ['collector' => 'librato']]
+        ];
 
-        $definition = $this->getMock('Symfony\Component\DependencyInjection\Definition');
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $definition = $this->createMock(Definition::class);
+        $container = $this->createMock(ContainerBuilder::class);
 
         $container->expects($this->atLeastOnce())
             ->method('hasDefinition')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $container->expects($this->once())
             ->method('getDefinition')
             ->with('flagbit_metrics.provider_invoker')
-            ->will($this->returnValue($definition));
+            ->willReturn($definition);
 
         $container->expects($this->atLeastOnce())
             ->method('findTaggedServiceIds')
             ->with('metrics.provider')
-            ->will($this->returnValue($services));
+            ->willReturn($services);
 
         $definition->expects($this->once())
             ->method('addMethodCall')
             ->with('addMetricsProvider', array(
                 new Reference('my_metric_collector'),
-                array(new Reference('beberlei_metrics.collector.librato'))
+                [new Reference('beberlei_metrics.collector.librato')]
             ));
 
         $metricsCollectorPass = new MetricsCollectorPass();

@@ -1,8 +1,10 @@
 <?php
 
+use Beberlei\Metrics\Collector\Collector;
 use Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection;
+use PHPUnit\Framework\TestCase;
 
-class CollectorCollectionTest extends \PHPUnit_Framework_TestCase
+class CollectorCollectionTest extends TestCase
 {
     /**
      * @var CollectorCollection
@@ -16,7 +18,7 @@ class CollectorCollectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->collector = $this->getMock('Beberlei\Metrics\Collector\Collector');
+        $this->collector = $this->createMock(Collector::class);
         $this->collectorCollection = new CollectorCollection();
         $this->collectorCollection->addCollector($this->collector);
     }
