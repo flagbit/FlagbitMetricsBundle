@@ -1,6 +1,7 @@
 <?php
 
 use Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler\MetricsCollectorPass;
+use Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -41,7 +42,7 @@ class MetricsCollectorPassTest extends TestCase
 
         $container->expects($this->once())
             ->method('getDefinition')
-            ->with('flagbit_metrics.provider_invoker')
+            ->with(ProviderInvoker::class)
             ->willReturn($definition);
 
         $container->expects($this->atLeastOnce())
