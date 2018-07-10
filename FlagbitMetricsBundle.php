@@ -10,7 +10,7 @@ class FlagbitMetricsBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        parent::boot($container);
+        parent::build($container);
 
         $container->addCompilerPass(new MetricsCollectorPass());
     }
