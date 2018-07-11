@@ -72,4 +72,13 @@ class CollectorCollectionTest extends TestCase
 
         $this->collectorCollection->measure($metricName, $metricValue);
     }
+
+    public function testFlush()
+    {
+        $this->collector
+            ->expects($this->once())
+            ->method('flush');
+
+        $this->collectorCollection->flush();
+    }
 }

@@ -52,10 +52,10 @@ class MetricsCollectorPassTest extends TestCase
 
         $definition->expects($this->once())
             ->method('addMethodCall')
-            ->with('addMetricsProvider', array(
+            ->with('addMetricsProvider', [
                 new Reference('my_metric_collector'),
                 [new Reference('beberlei_metrics.collector.librato')]
-            ));
+            ]);
 
         $metricsCollectorPass = new MetricsCollectorPass();
         $metricsCollectorPass->process($container);

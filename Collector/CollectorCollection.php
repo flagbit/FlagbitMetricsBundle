@@ -22,7 +22,7 @@ class CollectorCollection implements CollectorInterface
     /**
      * {@inheritdoc}
      */
-    function increment($variable)
+    public function increment($variable)
     {
         $this->callAll('increment', [$variable]);
     }
@@ -30,7 +30,7 @@ class CollectorCollection implements CollectorInterface
     /**
      * {@inheritdoc}
      */
-    function decrement($variable)
+    public function decrement($variable)
     {
         $this->callAll('decrement', [$variable]);
     }
@@ -38,7 +38,7 @@ class CollectorCollection implements CollectorInterface
     /**
      * {@inheritdoc}
      */
-    function timing($variable, $time)
+    public function timing($variable, $time)
     {
         $this->callAll('timing', [$variable, $time]);
     }
@@ -46,7 +46,7 @@ class CollectorCollection implements CollectorInterface
     /**
      * {@inheritdoc}
      */
-    function measure($variable, $value)
+    public function measure($variable, $value)
     {
         $this->callAll('measure', [$variable, $value]);
     }
@@ -58,6 +58,16 @@ class CollectorCollection implements CollectorInterface
     {
         foreach ($this->collectors as $collector) {
             $collector->{$method}(...$arguments);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flush()
+    {
+        foreach ($this->collectors as $collector) {
+            $collector->flush();
         }
     }
 }

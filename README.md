@@ -70,8 +70,7 @@ service tag and select so many collectors as you want.
 
 ```yml
 services:
-    my_mailer:
-        class:  Flagbit\ExampleBundle\MetricProvider\Provider
+    Flagbit\ExampleBundle\MetricProvider\Provider:
         tags:
             - { name: metrics.provider, collector: statsd }
             - { name: metrics.provider, collector: librato }
@@ -86,7 +85,7 @@ services:
         http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="my_mailer" class="Flagbit\ExampleBundle\MetricProvider\Provider">
+        <service id="Flagbit\ExampleBundle\MetricProvider\Provider">
             <tag name="metrics.provider" collector="statsd" />
             <tag name="metrics.provider" collector="librato" />
         </service>
@@ -102,12 +101,10 @@ it for you instead.
 ```php
 <?php
 
-// Collects the metrics of all your tagged services
+// Collects the metrics of all your tagged services...
 $container->get('flagbit_metrics.provider_invoker')->collectMetrics();
-
-// Just necessary if this is a cli task or symfony is running as a daemon
-// Otherwise Symfony will do it automatically for you 
-$container->get('beberlei_metrics.flush_service')->onTerminate();
+// ... and flush them
+$container->get('flagbit_metrics.provider_invoker')->onTerminate();
 ```
 
 It is recommended to inject the services into yours instead of using directly the container.

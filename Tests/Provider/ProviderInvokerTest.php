@@ -50,6 +50,21 @@ class ProviderInvokerTest extends TestCase
         $this->metricsProvider->collectMetrics();
     }
 
+    public function testOnTerminate()
+    {
+        $collector = $this->createMock(Collector::class);
+        $provider = $this->createMock(ProviderInterface::class);
+        $collectorCollection = $this->getCollectorCollection($collector);
+
+        $provider
+            ->expects($this->once())
+            ->method('collectMetrics')
+            ->with($collectorCollection);
+
+        $this->metricsProvider->addMetricsProvider($provider, [$collector]);
+        $this->metricsProvider->collectMetrics();
+    }
+
     private function getCollectorCollection($collector)
     {
         $collectorCollection = $this->createMock(CollectorCollection::class);

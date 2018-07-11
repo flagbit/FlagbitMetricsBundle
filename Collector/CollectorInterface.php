@@ -25,4 +25,9 @@ interface CollectorInterface
      * @param int    $value
      */
     public function measure($variable, $value);
+
+    /**
+     * @return void
+     */
+    public function flush();
 }

@@ -9,7 +9,7 @@ class CollectorCollectionFactory
     /**
      * @return CollectorCollection
      */
-    public function create()
+    public function create(): CollectorCollection
     {
         return new CollectorCollection();
     }
