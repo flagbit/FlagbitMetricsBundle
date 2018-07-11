@@ -2,25 +2,37 @@
 
 namespace Flagbit\Bundle\MetricsBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MetricsFlushCommand extends ContainerAwareCommand
+class MetricsFlushCommand extends Command
 {
+    /**
+     * @var ProviderInvoker
+     */
+    private $providerInvoker;
+
+    /**
+     * @param ProviderInvoker $providerInvoker
+     */
+    public function __construct(ProviderInvoker $providerInvoker)
+    {
+        parent::__construct('flagbit:metrics:flush');
+        $this->providerInvoker = $providerInvoker;
+    }
+
     protected function configure()
     {
-        $this
-            ->setName('flagbit:metrics:flush')
-            ->setDescription('Collect metrics and flush them to the metric collector servers')
-        ;
+        $this->setDescription('Collect metrics and flush them to the metric collector servers');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Collect job status metrics
-        $this->getContainer()->get('flagbit_metrics.provider_invoker')->collectMetrics();
+        $this->providerInvoker->collectMetrics();
         // Flush metric results
-        $this->getContainer()->get('beberlei_metrics.flush_service')->onTerminate();
+        $this->providerInvoker->onTerminate();
     }
 }
