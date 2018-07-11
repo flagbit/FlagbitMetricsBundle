@@ -1,19 +1,16 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-    <parameters>
-        <parameter key="flagbit_metrics.provider_invoker.class">Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker</parameter>
-        <parameter key="flagbit_metrics.factory.collector_collection.class">Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory</parameter>
-    </parameters>
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
         <defaults public="false" autowire="true" autoconfigure="true" />
 
-        <service id="flagbit_metrics.factory.collector_collection" alias="%flagbit_metrics.factory.collector_collection.class%" public="true" />
+        <prototype namespace="Flagbit\Bundle\MetricsBundle\" resource="../../*" exclude="../../{Tests}" />
 
-        <service id="flagbit_metrics.provider_invoker" alias="%flagbit_metrics.provider_invoker.class%" public="true" />
+        <service id="flagbit_metrics.factory.collector_collection" alias="Flagbit\Bundle\MetricsBundle\Collector\Factory\CollectorCollectionFactory" public="true" />
+
+        <service id="flagbit_metrics.provider_invoker" alias="Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker" public="true" />
     </services>
 </container>
