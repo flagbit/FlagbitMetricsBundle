@@ -13,9 +13,14 @@ class ProviderInvoker
     private $factory;
 
     /**
-     * @var array
+     * @var ProviderInterface[]
      */
-    private $providers = array();
+    private $providers = [];
+
+    /**
+     * @var \Flagbit\Bundle\MetricsBundle\Collector\CollectorCollection[]
+     */
+    private $collectorCollections = [];
 
     /**
      * @param CollectorCollectionFactory $factory
@@ -27,14 +32,21 @@ class ProviderInvoker
 
     public function collectMetrics()
     {
-        foreach ($this->providers as $provider) {
-            $provider['provider']->collectMetrics($provider['collector']);
+        foreach ($this->providers as $key => $provider) {
+            $provider->collectMetrics($this->collectorCollections[$key]);
+        }
+    }
+
+    public function onTerminate()
+    {
+        foreach ($this->collectorCollections as $collectorCollection) {
+            $collectorCollection->flush();
         }
     }
 
     /**
      * @param ProviderInterface $provider
-     * @param Collector[]              $collectors
+     * @param Collector[]       $collectors
      */
     public function addMetricsProvider(ProviderInterface $provider, array $collectors)
     {
@@ -43,9 +55,8 @@ class ProviderInvoker
             $collectorsCollection->addCollector($collector);
         }
 
-        $this->providers[] = array(
-            'provider' => $provider,
-            'collector' => $collectorsCollection,
-        );
+        $key = spl_object_hash($provider);
+        $this->providers[$key] = $provider;
+        $this->collectorCollections[$key] = $collectorsCollection;
     }
 }

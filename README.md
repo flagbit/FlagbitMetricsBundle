@@ -9,14 +9,10 @@ of Bejamin Eberlei into Symfony2.
 
 ### Using Composer
 
-Add the following lines to your composer.json:
+Installation with composer:
 
-```json
-{
-    "require": {
-        "flagbit/metrics-bundle": "1.*"
-    }
-}
+```bash
+composer require flagbit/metrics-bundle
 ```
 
 ### Register the bundle
@@ -32,7 +28,7 @@ class AppKernel extends Kernel
             // ...
             new Flagbit\Bundle\MetricsBundle\FlagbitMetricsBundle(),
             // ...
-        ;)
+        );
     }
 }
 ```
@@ -58,7 +54,7 @@ class Provider implements ProviderInterface
 {
     public function collectMetrics(CollectorInterface $collector)
     {
-        $value = rand(1,9);
+        $value = random_int(1,9);
         $collector->measure('foo.bar', $value);
     }
 }
@@ -66,7 +62,7 @@ class Provider implements ProviderInterface
 
 ### Create your Service
 
-Once you have created your metric provider class, lets go to create the service. In order the metric collector service 
+Once you have created your metric provider class, let's go to create the service. In order the metric collector service 
 automatically to collect all the metrics of your metric provider service, you just need to use the "metrics.provider" 
 service tag and select so many collectors as you want.
 
@@ -74,8 +70,7 @@ service tag and select so many collectors as you want.
 
 ```yml
 services:
-    my_mailer:
-        class:  Flagbit\ExampleBundle\MetricProvider\Provider
+    Flagbit\ExampleBundle\MetricProvider\Provider:
         tags:
             - { name: metrics.provider, collector: statsd }
             - { name: metrics.provider, collector: librato }
@@ -90,7 +85,7 @@ services:
         http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="my_mailer" class="Flagbit\ExampleBundle\MetricProvider\Provider">
+        <service id="Flagbit\ExampleBundle\MetricProvider\Provider">
             <tag name="metrics.provider" collector="statsd" />
             <tag name="metrics.provider" collector="librato" />
         </service>
@@ -106,17 +101,17 @@ it for you instead.
 ```php
 <?php
 
-// Collects the metrics of all your tagged services
+// Collects the metrics of all your tagged services...
 $container->get('flagbit_metrics.provider_invoker')->collectMetrics();
-
-// Just necessary if this is a cli task or symfony is running as a daemon
-// Otherwise Symfony will do it automatically for you 
-$container->get('beberlei_metrics.flush_service')->onTerminate();
+// ... and flush them
+$container->get('flagbit_metrics.provider_invoker')->onTerminate();
 ```
+
+It is recommended to inject the services into yours instead of using directly the container.
 
 ### Command
 
 ```bash
-$ php app/console flagbit:metrics:flush
+$ php bin/console flagbit:metrics:flush
 ```
 

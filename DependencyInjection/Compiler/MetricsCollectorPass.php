@@ -2,6 +2,7 @@
 
 namespace Flagbit\Bundle\MetricsBundle\DependencyInjection\Compiler;
 
+use Flagbit\Bundle\MetricsBundle\Provider\ProviderInvoker;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -15,14 +16,14 @@ class MetricsCollectorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('flagbit_metrics.provider_invoker')) {
+        if (false === $container->hasDefinition(ProviderInvoker::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('flagbit_metrics.provider_invoker');
+        $definition = $container->getDefinition(ProviderInvoker::class);
 
         foreach ($container->findTaggedServiceIds('metrics.provider') as $id => $tags) {
-            $collectors = array();
+            $collectors = [];
             foreach($tags as $attributes) {
                 if (!isset($attributes['collector'])) {
                     throw new \InvalidArgumentException(sprintf(
@@ -36,7 +37,7 @@ class MetricsCollectorPass implements CompilerPassInterface
             }
 
             if (!empty($collectors)) {
-                $definition->addMethodCall('addMetricsProvider', array(new Reference($id), $collectors));
+                $definition->addMethodCall('addMetricsProvider', [new Reference($id), $collectors]);
             }
         }
     }
